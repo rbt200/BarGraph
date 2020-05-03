@@ -37,6 +37,7 @@ struct BarGraph_Previews: PreviewProvider {
 struct BarView: View {
     
     let report: Report
+    @State private var showGraph: Bool = false
     
     var body: some View {
         
@@ -48,7 +49,12 @@ struct BarView: View {
             
             Rectangle()
                 .fill(Color.red)
-                .frame(width: 100, height: CGFloat(yValue))
+                .frame(width: 100, height: self.showGraph ? CGFloat(yValue) : 0.0)
+                .onAppear {
+                    withAnimation(.spring()) {
+                        self.showGraph = true
+                    }
+            }
             
             Text(report.year)
         }
